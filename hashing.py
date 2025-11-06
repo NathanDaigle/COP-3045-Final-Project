@@ -1,5 +1,7 @@
 import argon2
 from argon2 import PasswordHasher
+import json
+
 ph = PasswordHasher()
 
 def hash(password: str):
