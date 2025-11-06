@@ -1,10 +1,11 @@
 import argon2
+from argon2 import PasswordHasher
+ph = PasswordHasher()
 
 def hash(password: str):
-    return argon2.PasswordHasher().hash(password)
+    return PasswordHasher().hash(password)
 
 def dehash(password: str, hash: str):
-    ph = argon2.PasswordHasher()
     try:
         ph.verify(hash, password)
         return True
