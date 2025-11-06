@@ -1,9 +1,9 @@
 import argon2
 
-def hash(password):
+def hash(password: str):
     return argon2.PasswordHasher().hash(password)
 
-def dehash(password, hash):
+def dehash(password: str, hash: str):
     ph = argon2.PasswordHasher()
     try:
         ph.verify(hash, password)

@@ -8,11 +8,8 @@ class MainUI:
         self.root.geometry("500x300")
         self.root.resizable(False, False)
 
-        self.label = tk.Label(self.root, text="Hello World!")
+        self.label = tk.Label(self.root, text="Test Label")
         self.label.pack(pady=20, padx=20)
-
-        self.quit_button = tk.Button(self.root, text="Quit", command=self.root.quit)
-        self.quit_button.pack(pady=10)
 
     def on_click(self):
         messagebox.showinfo("Info", "Button clicked!")
