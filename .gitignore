@@ -1,2 +1,4 @@
 # Proposal
 *.pdf
+
+/__pycache__

@@ -1,7 +1,8 @@
 import ui
 
 def main():
-    pass
+    app = ui.MainUI()
+    app.run()
 
 if __name__ == "__main__":
-    pass
+    main()
