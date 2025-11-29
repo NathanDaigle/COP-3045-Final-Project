@@ -1,4 +1,5 @@
 import tkinter as tk
+from passwordManager import addPassword, fetchPassword, deletePassword, listServices, vaultInit
 from tkinter import messagebox
 
 class MainUI:

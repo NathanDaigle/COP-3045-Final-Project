@@ -18,13 +18,13 @@ def saveData(data):
 def vaultInit(master_password: str):
     """First-time setup: Create vault with hashed master and salt."""
     data = {
-        "master_hash": hashPassword(master_password),  # From hashing
+        "master_hash": hashPassword(master_password),  # From our hashing
         "salt": os.urandom(16).hex(),
         "entries": {}
     }
     saveData(data)
 
-def add_password(service: str, password: str, master_password: str):
+def addPassword(service: str, password: str, master_password: str):
     """Add encrypted password for service."""
     try:
         data = loadData()
@@ -56,7 +56,7 @@ def fetchPassword(service: str, master_password: str):
     except Exception:
         return None
 
-def delete_password(service: str, master_password: str):
+def deletePassword(service: str, master_password: str):
     """Delete service entry."""
     try:
         data = loadData()
@@ -70,7 +70,7 @@ def delete_password(service: str, master_password: str):
     except Exception:
         return False
 
-def list_services(master_password: str):
+def listServices(master_password: str):
     """List all services."""
     try:
         data = loadData()
