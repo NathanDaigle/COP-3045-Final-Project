@@ -1,9 +1,10 @@
-import ui
-import hashing
-import secrets
-import json
 import os
-import passwordManager as PM
+import json
+from tkinter import messagebox, simpledialog
+import tkinter as tk
+from hashing import hashPassword, verifyPassword
+from passwordManager import vaultInit, loadData
+from ui import MainUI
 
 def main():
     if not os.path.exists("Passwords.json"): # New user / Missing file
