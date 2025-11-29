@@ -6,25 +6,47 @@ from hashing import hashPassword, verifyPassword
 from passwordManager import vaultInit, loadData
 from ui import MainUI
 
+def get_master_password(prompt: str = "Enter master password:") -> str:
+    root = tk.Tk()
+    root.withdraw()
+    password = simpledialog.askstring("Master Password", prompt, show="*", parent=root)
+    root.destroy()
+    return password
+
 def main():
-    if not os.path.exists("Passwords.json"): # New user / Missing file
-        with open("Passwords.json", "x+")  as f:
-            temp = {
-                "Master": secrets.token_urlsafe(64)
-            }
-            f.write(json.dumps(temp))
-            
-    # Ideally should never throw an error but try is always good
-    try:
-        # format {"Master": "masterKey", "ServiceName": "HashedPassword"}
-        currentPasswords = json.loads(open("Passwords.json", "r").read())
-    except FileNotFoundError:
-        print("Passwords.json not found!")
-        exit(1)
-    print(currentPasswords)
-    
-    # app = ui.MainUI()
-    # app.run()
+    DATA_FILE = "Passwords.json"
+
+    if not os.path.exists(DATA_FILE):
+        # First-time setup
+        messagebox.showinfo("First Run", "Create your master password.")
+        master = get_master_password("Enter master password:")
+        if master:
+            confirm = get_master_password("Confirm master password:")
+            if master == confirm:
+                vaultInit(master)
+                messagebox.showinfo("Success", "Vault created!")
+            else:
+                messagebox.showerror("Error", "Passwords don't match. Exiting.")
+                return
+        else:
+            return
+
+    # Login loop
+    while True:
+        master = get_master_password("Enter master password to login:")
+        if not master:
+            continue
+        try:
+            data = loadData()
+            if verifyPassword(master, data["master_hash"]):
+                # Launch UI
+                app = MainUI(master)
+                app.run()
+                break
+            else:
+                messagebox.showerror("Error", "Invalid master password.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Login failed: {e}")
 
 if __name__ == "__main__":
     main()
