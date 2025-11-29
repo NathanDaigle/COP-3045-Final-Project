@@ -37,7 +37,14 @@ def addPassword(service: str, password: str, master_password: str):
         data["entries"][service] = enc_pass
         saveData(data)
         return True
-    except Exception:
+    except AttributeError as e:
+        print(f"DEBUG: Likely import issue in derive_key: {e}")
+        return False
+    except ValueError as e:
+        print(f"DEBUG: Value error (invalid master/salt): {e}")
+        return False
+    except Exception as e:
+        print(f"DEBUG: Unexpected error: {type(e).__name__}: {e}")
         return False
 
 def fetchPassword(service: str, master_password: str):
