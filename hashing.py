@@ -6,7 +6,7 @@ import json
 
 ph = PasswordHasher()
 
-def hash(password: str):
+def hashPassword(password: str):
     return PasswordHasher().hash(password)
 
 def verifyPassword(password: str, hashed: str):
