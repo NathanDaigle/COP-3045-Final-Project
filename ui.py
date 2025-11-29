@@ -39,9 +39,9 @@ class MainUI:
             self.listbox.insert(tk.END, service)
 
     def add_entry(self):
-        service = simpledialog.askstring("Add Service", "Enter service name:")
+        service = simpledialog.askstring("Add Service", "Enter service name:", parent=self.root)
         if service:
-            password = simpledialog.askstring("Add Password", "Enter password:", show="*")
+            password = simpledialog.askstring("Add Password", "Enter password:", parent=self.root, show="*")
             if password and addPassword(service, password, self.master_password):
                 messagebox.showinfo("Success", "Password added!")
                 self.update_list()
@@ -54,7 +54,12 @@ class MainUI:
             service = self.listbox.get(selection[0])
             password = fetchPassword(service, self.master_password)
             if password:
-                messagebox.showinfo(f"Password for {service}", f"Password: {password}")
+                self.root.clipboard_clear()
+                self.root.clipboard_append(password)
+                messagebox.showinfo(
+                    "Password Fetched", 
+                    f"Password for {service} has been copied to your clipboard!\n\nPaste it where needed."
+                )
             else:
                 messagebox.showerror("Error", "Failed to retrieve password.")
         else:
