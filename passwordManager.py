@@ -40,7 +40,42 @@ def add_password(service: str, password: str, master_password: str):
     except Exception:
         return False
 
-def fetchPassword(serviceName: str):
-    Passwords = json.loads(open("Passwords.json", "r").read())
-    masterKey = Passwords["Master"]
-    pass
+def fetchPassword(service: str, master_password: str):
+    """Retrieve decrypted password for service."""
+    try:
+        data = loadData()
+        if not verifyPassword(master_password, data["master_hash"]):
+            raise ValueError("Invalid master password.")
+        if service not in data["entries"]:
+            return None
+        salt = bytes.fromhex(data["salt"])
+        key = derive_key(master_password, salt)
+        f = Fernet(key)
+        dec_pass = f.decrypt(data["entries"][service].encode()).decode()
+        return dec_pass
+    except Exception:
+        return None
+
+def delete_password(service: str, master_password: str):
+    """Delete service entry."""
+    try:
+        data = loadData()
+        if not verifyPassword(master_password, data["master_hash"]):
+            raise ValueError("Invalid master password.")
+        if service in data["entries"]:
+            del data["entries"][service]
+            saveData(data)
+            return True
+        return False
+    except Exception:
+        return False
+
+def list_services(master_password: str):
+    """List all services."""
+    try:
+        data = loadData()
+        if not verifyPassword(master_password, data["master_hash"]):
+            raise ValueError("Invalid master password.")
+        return list(data["entries"].keys())
+    except Exception:
+        return []
