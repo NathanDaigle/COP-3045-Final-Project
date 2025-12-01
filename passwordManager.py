@@ -6,12 +6,14 @@ from hashing import derive_key, verifyPassword, hashPassword
 DATA_FILE = "Passwords.json"
 
 def loadData():
+    """Loads passwordd vault data and translates from JSON."""
     if not os.path.exists(DATA_FILE):
         raise FileNotFoundError("Vault not initialized. Run first-time setup.")
     with open(DATA_FILE, 'r') as f:
         return json.load(f)
 
 def saveData(data):
+    """Saves changed data to the Passwords.json file."""
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=4)
 

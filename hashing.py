@@ -6,6 +6,7 @@ import base64
 ph = PasswordHasher()
 
 def hashPassword(password: str):
+    """Hashes plain-text into necessary format."""
     return PasswordHasher().hash(password)
 
 def verifyPassword(password: str, hashed: str):

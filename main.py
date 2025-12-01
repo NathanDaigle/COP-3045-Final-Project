@@ -6,7 +6,8 @@ from hashing import hashPassword, verifyPassword
 from passwordManager import vaultInit, loadData
 from ui import MainUI
 
-def get_master_password(prompt: str = "Enter master password:") -> str:
+def get_master_password(prompt: str = "Enter master password:"):
+    """Retrives master password from user with a dialog popup."""
     root = tk.Tk()
     root.withdraw()
     password = simpledialog.askstring("Master Password", prompt, show="*", parent=root)
@@ -14,6 +15,7 @@ def get_master_password(prompt: str = "Enter master password:") -> str:
     return password
 
 def main():
+    """Responsible for first-time setup and running the UI"""
     DATA_FILE = "Passwords.json"
 
     if not os.path.exists(DATA_FILE):
