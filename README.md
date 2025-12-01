@@ -11,6 +11,7 @@ SecureLock is a simple password vault that allows you to securely store your pas
 
 ```sh
 git clone "https://github.com/NathanDaigle/COP-3045-Final-Project"
+cd COP-3045-Final-Project
 pip install -r requirements.txt
 python main.py
 ```
